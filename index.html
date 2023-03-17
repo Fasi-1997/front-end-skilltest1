@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>To Do List</title>
+</head>
+
+<body>
+    <section class="container">
+        <div>
+            <div>
+                <input placeholder="Add a task" class="add-task" id="add" />
+                <div class="flex space-between">
+                    <button class="secondary-btn" onclick="completeAllTasks()">Complete Tasks</button><button class="secondary-btn" onclick="deleteCompletedTasks()">Clear Completed</button>
+                </div>
+                <div>
+                    <ul id="todo-list">
+
+                    </ul>
+                </div>
+                <div class="flex space-between">
+                    <div><span id="total-tasks">Total tasks: <span id="tasks-counter">0</span></span></div>
+                    <div id="btn-group"><button class="btn active" onclick="filterTasks('all')">All</button>
+                        <button class="btn" onclick="filterTasks('incomplete')">Incomplete</button>
+                        <button class="btn" onclick="filterTasks('completed')">Complete</button>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
