@@ -13,18 +13,23 @@
     <section class="container">
         <div>
             <div>
-                <input placeholder="Add a task" class="add-task" id="add" />
+                <div class="flex space-between add-task-container">
+                    <div><img src="Assets/todo.png" class="to-do-icon" alt=""></div>
+                    <input placeholder="Add a task" class="add-task" id="add" oninput="toggleButton()" />
+                    <div><img src="Assets/add.png" class="add-task-icon" id="add-icon" alt="" onclick="addTask()"></div>
+                </div>
                 <div class="flex space-between">
-                    <button class="secondary-btn" onclick="completeAllTasks()">Complete Tasks</button><button class="secondary-btn" onclick="deleteCompletedTasks()">Clear Completed</button>
+                    <button class="secondary-btn" onclick="completeAllTasks()"><img src="Assets/tick.png"
+                            class="" />Complete All Tasks</button>
+                    <button class="secondary-btn" onclick="clearCompletedTasks()">Clear Completed</button>
                 </div>
                 <div>
-                    <ul id="todo-list">
-
-                    </ul>
+                    <ul id="todo-list"></ul>
                 </div>
                 <div class="flex space-between">
-                    <div><span id="total-tasks">Total tasks: <span id="tasks-counter">0</span></span></div>
-                    <div id="btn-group"><button class="btn active" onclick="filterTasks('all')">All</button>
+                    <div class="tasks-left"><span id="tasks-counter">0</span><span > tasks </span></div>
+                    <div id="btn-group">
+                        <button class="btn active" onclick="filterTasks('all')">All</button>
                         <button class="btn" onclick="filterTasks('incomplete')">Incomplete</button>
                         <button class="btn" onclick="filterTasks('completed')">Complete</button>
                     </div>

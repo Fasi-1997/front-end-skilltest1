@@ -3,20 +3,20 @@ let filteredTasks = [];
 const taskList = document.getElementById('todo-list');
 const addTaskInput = document.getElementById('add');
 const tasksCounter = document.getElementById('tasks-counter');
+const addTaskIcon = document.getElementById('add-icon');
 
-console.log('Working');
 function completeAllTasks() {
     for (i = 0; i < tasks.length; i++) {
-        tasks[i].Iscompleted = true;
+        tasks[i].IsCompleted = true;
     }
     renderList(tasks);
 }
 function addTaskToUI(task) {
     const li = document.createElement('li');
     li.innerHTML = `
-    <input type="checkbox" ${task.Iscompleted ? ' checked ' : ''} id="${task.id}" class="custom-checkbox">
+    <input type="checkbox" ${task.IsCompleted ? ' checked ' : ''} id="${task.id}" class="custom-checkbox">
     <label for="${task.id}">${task.title}</label>
-    <img src="bin.png" class="delete" data-id="${task.id}" />`
+    <img src="Assets/close.png" class="delete" data-id="${task.id}" />`
     taskList.append(li);
 }
 function renderList(todolist) {
@@ -29,14 +29,14 @@ function renderList(todolist) {
 
 function toggletask(taskId) {
     const taskIndex = tasks.findIndex((task => task.id == taskId));
-    tasks[taskIndex].Iscompleted = !tasks[taskIndex].Iscompleted;
+    tasks[taskIndex].IsCompleted = !tasks[taskIndex].IsCompleted;
 }
 function filterTasks(filter) {
     const newTasks = tasks.filter(function (task) {
         if (filter == 'completed')
-            return task.Iscompleted == true;
+            return task.IsCompleted == true;
         else if (filter == 'incomplete')
-            return task.Iscompleted == false;
+            return task.IsCompleted == false;
         else return true;
     })
     console.log(newTasks)
@@ -48,56 +48,59 @@ function deleteTask(taskId) {
     const newTasks = tasks.filter(function (task) {
         return task.id != taskId;
     })
-    console.log(newTasks)
     tasks = newTasks;
     renderList(tasks);
-    showNotification('Task deleted!!!!');
+    showNotification('Task deleted.');
 }
-function deleteCompletedTasks() {
-    const newTasks = tasks.filter(function (task) {
-        return task.Iscompleted != true;
+function clearCompletedTasks() {
+    const completedTasks = tasks.filter(function (task) {
+        return task.IsCompleted == true;
     })
-    console.log(newTasks)
-    tasks = newTasks;
+    if (completedTasks.length == 0) {
+        showNotification('There are no completed tasks.');
+        return;
+    }    
+    
+    for(i=0;i<completedTasks.length;i++){
+        const taskIndex = tasks.findIndex((task => task.id == completedTasks[i].id));
+        tasks[taskIndex].IsCompleted = false;
+    }
     renderList(tasks);
-    showNotification('Task deleted!!!!');
+    showNotification('Cleared completed tasks.');
 }
-function addTask(task) {
-    if (task) {
-        tasks.push(task);
-        renderList(tasks);
-        showNotification('Task added!!!!');
+function addTask() {
+    const title = addTaskInput.value;
+    if (!title) {
+        showNotification('Task cant be empty.');
         return;
     }
-    showNotification('Task cant be added')
+    const task = {
+        title: title,
+        id: tasks.length + 1,
+        IsCompleted: false
+    }
+    addTaskInput.value = '';
+    tasks.push(task);
+    renderList(tasks);
+    showNotification('Task added.');
+    return;
 }
 
 function showNotification(message) {
     alert(message);
 }
-function handleInputKeypress(e) {
-    if (e.key === 'Enter') {
-        const title = e.target.value;
-        if (!title) {
-            showNotification('Task cant be empty!!!!');
-            return;
-        }
-        const task = {
-            title: title,
-            id: tasks.length + 1,
-            Iscompleted: false
-        }
-        addTask(task);
-        e.target.value = '';
-
+function toggleButton() {
+    if (addTaskInput.value === "") {
+        addTaskIcon.style.display = "none";
+    } else {
+        addTaskIcon.style.display = "block";
     }
 }
+
 function handleClick(e) {
     const target = e.target;
-
     if (target.className === 'delete') {
         const taskId = target.dataset.id;
-        console.log(taskId);
         deleteTask(taskId);
         return;
     } else if (target.className === 'custom-checkbox') {
@@ -111,11 +114,8 @@ function handleClick(e) {
     }
 }
 function setActiveButton() {
-    // Get the container element
     var btnContainer = document.getElementById("btn-group");
-    // Get all buttons with class="btn" inside the container
     var btns = btnContainer.getElementsByClassName("btn");
-    // Loop through the buttons and add the active class to the current/clicked button
     for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function () {
             var current = document.getElementsByClassName("active");
@@ -124,5 +124,4 @@ function setActiveButton() {
         });
     }
 }
-addTaskInput.addEventListener('keyup', handleInputKeypress);
 document.addEventListener('click', handleClick)
