@@ -82,7 +82,7 @@ function addTask() {
     }
     const task = {
         title: title,
-        id: Date.now.toString,
+        id: Date.now().toString(),
         IsCompleted: false
     }
     addTaskInput.value = '';
