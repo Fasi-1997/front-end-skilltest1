@@ -89,6 +89,7 @@ function addTask() {
     tasks.push(task);
     renderList(tasks);
     clearFilter();
+    toggleButton();
     showNotification('Task added.');
     return;
 }
