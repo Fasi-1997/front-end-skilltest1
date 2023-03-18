@@ -50,7 +50,7 @@ function filterTasks(filter) {
 
 function deleteTask(taskId) {
     const newTasks = tasks.filter(function (task) {
-        return task.id != taskId;
+        return task.id !== taskId;
     })
     tasks = newTasks;
     renderList(tasks);
@@ -82,7 +82,7 @@ function addTask() {
     }
     const task = {
         title: title,
-        id: tasks.length + 1,
+        id: Date.now.toString,
         IsCompleted: false
     }
     addTaskInput.value = '';
