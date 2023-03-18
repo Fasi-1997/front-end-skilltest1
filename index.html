@@ -16,7 +16,7 @@
                 <div class="flex space-between add-task-container">
                     <div><img src="Assets/todo.png" class="to-do-icon" alt=""></div>
                     <input placeholder="Add a task" class="add-task" id="add" oninput="toggleButton()" />
-                    <div><img src="Assets/add.png" class="add-task-icon" id="add-icon" alt="" onclick="addTask()"></div>
+                    <div class="add-icon-wrapper"><img src="Assets/add.png" class="add-task-icon" id="add-icon" alt="" onclick="addTask()"></div>
                 </div>
                 <div class="flex space-between">
                     <button class="secondary-btn" onclick="completeAllTasks()"><img src="Assets/tick.png"
@@ -29,7 +29,7 @@
                 <div class="flex space-between">
                     <div class="tasks-left"><span id="tasks-counter">0</span><span > tasks </span></div>
                     <div id="btn-group">
-                        <button class="btn active" onclick="filterTasks('all')">All</button>
+                        <button class="btn active" id="all" onclick="filterTasks('all')">All</button>
                         <button class="btn" onclick="filterTasks('incomplete')">Incomplete</button>
                         <button class="btn" onclick="filterTasks('completed')">Complete</button>
                     </div>

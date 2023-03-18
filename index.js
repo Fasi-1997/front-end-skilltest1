@@ -11,6 +11,7 @@ function completeAllTasks() {
     }
     renderList(tasks);
 }
+
 function addTaskToUI(task) {
     const li = document.createElement('li');
     li.innerHTML = `
@@ -19,6 +20,7 @@ function addTaskToUI(task) {
     <img src="Assets/close.png" class="delete" data-id="${task.id}" />`
     taskList.append(li);
 }
+
 function renderList(todolist) {
     taskList.innerHTML = '';
     for (i = 0; i < todolist.length; i++) {
@@ -30,6 +32,8 @@ function renderList(todolist) {
 function toggletask(taskId) {
     const taskIndex = tasks.findIndex((task => task.id == taskId));
     tasks[taskIndex].IsCompleted = !tasks[taskIndex].IsCompleted;
+    renderList(tasks);
+    clearFilter();
 }
 function filterTasks(filter) {
     const newTasks = tasks.filter(function (task) {
@@ -39,11 +43,11 @@ function filterTasks(filter) {
             return task.IsCompleted == false;
         else return true;
     })
-    console.log(newTasks)
     filteredTasks = newTasks;
     renderList(filteredTasks);
     setActiveButton();
 }
+
 function deleteTask(taskId) {
     const newTasks = tasks.filter(function (task) {
         return task.id != taskId;
@@ -52,6 +56,7 @@ function deleteTask(taskId) {
     renderList(tasks);
     showNotification('Task deleted.');
 }
+
 function clearCompletedTasks() {
     const completedTasks = tasks.filter(function (task) {
         return task.IsCompleted == true;
@@ -68,6 +73,7 @@ function clearCompletedTasks() {
     renderList(tasks);
     showNotification('Cleared completed tasks.');
 }
+
 function addTask() {
     const title = addTaskInput.value;
     if (!title) {
@@ -82,6 +88,7 @@ function addTask() {
     addTaskInput.value = '';
     tasks.push(task);
     renderList(tasks);
+    clearFilter();
     showNotification('Task added.');
     return;
 }
@@ -89,6 +96,7 @@ function addTask() {
 function showNotification(message) {
     alert(message);
 }
+
 function toggleButton() {
     if (addTaskInput.value === "") {
         addTaskIcon.style.display = "none";
@@ -112,6 +120,12 @@ function handleClick(e) {
         renderList(tasks);
         return;
     }
+}
+function clearFilter(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    var allFilter = document.getElementById("all");
+    allFilter.className += " active";
 }
 function setActiveButton() {
     var btnContainer = document.getElementById("btn-group");
